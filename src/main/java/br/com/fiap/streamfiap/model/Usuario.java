@@ -20,6 +20,9 @@ public class Usuario {
     }
 
     public Usuario(String nome, int idade, double creditos) {
+    	if (creditos < 0) {
+            throw new IllegalArgumentException("Créditos não podem ser negativos");
+        }
         this.nome = nome;
         this.idade = idade;
         this.creditos = creditos;

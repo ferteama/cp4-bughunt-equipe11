@@ -36,7 +36,7 @@
 | bug08 | Ao cadastrar uma série, ela ficava sem título, categoria e duração (tudo salvo como null/0) | Construtor Serie(...) em Serie.java, linhas 14–16 | Adicionamos a chamada super(titulo, categoria, duracaoMinutos, classificacaoEtaria, true) para inicializar os atributos herdados de Conteudo | Herança / Construtores |
 | bug09 | Séries eram cobradas sempre 9.90 (preço padrão), ignorando o número de temporadas | Linha 20 do Serie.java | Removemos o parâmetro desconto e adicionamos @Override, transformando a sobrecarga em sobrescrita real do método de Conteudo | Sobrescrita vs sobrecarga de métodos |
 | bug10 |Ao tentar alugar um conteúdo com classificação etária incompatível, a API retornava erro 500 genérico em vez de uma mensagem clara. |GlobalExceptionHandler.java — faltava tratamento para ClassificacaoIndicativaException |Criamos o método handleClassificacaoIndicativa com @ExceptionHandler, retornando 403 com a mensagem da regra |Exceções checked vs unchecked / Tratamento de exceções |
-| bug11 | | | | |
+| bug11 | Era possível cadastrar um usuário com créditos negativos via POST /api/usuarios. | Construtor Usuario(...) em Usuario.java, linhas 22–26 | Adicionamos validação if (creditos < 0) throw new IllegalArgumentException(...) antes de atribuir o valor | Validação de regras de negócio / Encapsulamento |
 | bug12 | | | | |
 
 ## Parte 2 — Ajustes de Clean Code
