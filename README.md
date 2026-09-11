@@ -44,7 +44,7 @@
 | # | Onde estava | Qual princípio/boas práticas era violado | O que eu mudei |
 |---|---|---|---|
 | clean01 |Método alugar() em Usuario.java | Nomes significativos - A variável p não dizia nada sobre seu conteúdo |Renomeei a variável p para preco em todas as suas ocorrências no método |
-| clean02 | | | |
+| clean02 | Método debitarCreditos() em Usuario.java |Comentários devem dizer a verdade sobre o código — o comentário dizia "adiciona", mas o código subtrai | Corrigi o texto do comentário para refletir o que o código realmente faz |
 | clean03 | | | |
 | clean04 | | | |
 | clean05 | | | |
