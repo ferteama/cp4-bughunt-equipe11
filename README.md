@@ -48,7 +48,7 @@
 | clean03 | Final da classe ConteudoController.java | Evitar código morto/comentado (Clean Code) — método não utilizado e bloco de comentário com código antigo | Removi o método calcularDescontoAntigo() e o bloco de código comentado (histórico fica no Git, não no fonte) |
 | clean04 | Atributo duracaoMinutos em Conteudo.java e seus usos em ConteudoController.java | Encapsulamento — atributo público permitia acesso direto, ignorando o getter/setter | Tornei o campo private e substituí os acessos diretos (filme.duracaoMinutos) pelo método getDuracaoMinutos() |
 | clean05 | Método alugar() em Usuario.java | Responsabilidade única / SRP  — o método misturava regra de negócio do aluguel com a impressão do recibo | Extraí a impressão do recibo para o método privado imprimirRecibo(), deixando alugar() focado só na regra de negócio |
-| clean06 | | | |
+| clean06 | Cálculos de preço em Conteudo.java, Filme.java e Serie.java | Evitar números mágicos, valores como 9.90, 5.00, 4.90 e 0.8 apareciam soltos no código, sem explicar seu significado | Extraímos os valores para constantes nomeadas (PRECO_BASE, ADICIONAL_ESTREIA, PRECO_POR_TEMPORADA, PERCENTUAL_DESCONTO) |
 
 ---
 
