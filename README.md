@@ -37,7 +37,7 @@
 | bug09 | Séries eram cobradas sempre 9.90 (preço padrão), ignorando o número de temporadas | Linha 20 do Serie.java | Removemos o parâmetro desconto e adicionamos @Override, transformando a sobrecarga em sobrescrita real do método de Conteudo | Sobrescrita vs sobrecarga de métodos |
 | bug10 |Ao tentar alugar um conteúdo com classificação etária incompatível, a API retornava erro 500 genérico em vez de uma mensagem clara. |GlobalExceptionHandler.java — faltava tratamento para ClassificacaoIndicativaException |Criamos o método handleClassificacaoIndicativa com @ExceptionHandler, retornando 403 com a mensagem da regra |Exceções checked vs unchecked / Tratamento de exceções |
 | bug11 | Era possível cadastrar um usuário com créditos negativos via POST /api/usuarios. | Construtor Usuario(...) em Usuario.java, linhas 22–26 | Adicionamos validação if (creditos < 0) throw new IllegalArgumentException(...) antes de atribuir o valor | Validação de regras de negócio / Encapsulamento |
-| bug12 | | | | |
+| bug12 |Buscar um usuário inexistente (GET/api/usuarios/{id}) retornava página de erro HTML padrão (500) em vez de um JSON com status 404. |UsuarioController.java/AluguelController.java usam IllegalArgumentException, sem handler em GlobalExceptionHandler.java | Adicionamos handleIllegalArgument mapeando IllegalArgumentException para status 404 com mensagem em JSON | Tratamento de exceções |
 
 ## Parte 2 — Ajustes de Clean Code
 
