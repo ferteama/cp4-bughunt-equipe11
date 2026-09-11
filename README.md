@@ -33,7 +33,7 @@
 | bug05 | O método captura qualquer exceção e retorna null | Linha 30 do ConteudoController.java | Removemos o try/catch e simplificamos o retorno para ResponseEntity.ok(conteudo) | Tratamento de exceções |
 | bug06 | O sistema permitia alugar um conteúdo mesmo quando ele estava indisponível. | Método alugar() do AluguelController.java, após a busca do conteúdo | Adicionamos uma verificação com if (!conteudo.isDisponivel()) e lançamos a ConteudoIndisponivelException quando o conteúdo não estiver disponível para aluguel | Validação de regras de negócio e tratamento de exceções |
 | bug07 | O valor do aluguel aumentava em 20% ao aplicar a promoção, em vez de receber 20% de desconto | Linha 25 do Filme.java | Alteramos return preco * 1.2 para return preco * 0.8, fazendo com que o preço seja reduzido em 20% | Cálculo de porcentagem |
-| bug08 | | | | |
+| bug08 | Ao cadastrar uma série, ela ficava sem título, categoria e duração (tudo salvo como null/0) | Construtor Serie(...) em Serie.java, linhas 14–16 | Adicionamos a chamada super(titulo, categoria, duracaoMinutos, classificacaoEtaria, true) para inicializar os atributos herdados de Conteudo | Herança / Construtores |
 | bug09 | | | | |
 | bug10 | | | | |
 | bug11 | | | | |
