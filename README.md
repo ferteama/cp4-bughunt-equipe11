@@ -43,7 +43,7 @@
 
 | # | Onde estava | Qual princípio/boas práticas era violado | O que eu mudei |
 |---|---|---|---|
-| clean01 | | | |
+| clean01 |Método alugar() em Usuario.java | Nomes significativos - A variável p não dizia nada sobre seu conteúdo |Renomeei a variável p para preco em todas as suas ocorrências no método |
 | clean02 | | | |
 | clean03 | | | |
 | clean04 | | | |
