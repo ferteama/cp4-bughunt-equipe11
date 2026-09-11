@@ -9,6 +9,7 @@ import br.com.fiap.streamfiap.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import br.com.fiap.streamfiap.exception.ConteudoIndisponivelException;
 
 @RestController
 @RequestMapping("/api/alugueis")
@@ -28,6 +29,11 @@ public class AluguelController {
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado: " + usuarioId));
         Conteudo conteudo = conteudoRepository.findById(conteudoId)
                 .orElseThrow(() -> new ConteudoNaoEncontradoException("Conteúdo não encontrado: " + conteudoId));
+        
+        if (!conteudo.isDisponivel()) {
+                throw new ConteudoIndisponivelException(
+                "Conteúdo indisponível: " + conteudo.getTitulo());
+        }
 
         Usuario usuarioAtualizado = usuario.alugar(conteudo);
 

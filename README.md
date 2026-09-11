@@ -31,7 +31,7 @@
 | bug03 | Todos usuários possuem ID null | Linha 12 do Usuario.class | Adicionamos @GeneratedValue(strategy = GenerationType.IDENTITY) | Atributo não definido |
 | bug04 | Comparação incorreta de String utilizando "==" | Linha 47 do ConteudoController.java | Substituímos para .equals() para comparar as strings | Comparação entre strings |
 | bug05 | O método captura qualquer exceção e retorna null | Linha 30 do ConteudoController.java | Removemos o try/catch e simplificamos o retorno para ResponseEntity.ok(conteudo) | Tratamento de exceções |
-| bug06 | | | | |
+| bug06 | O sistema permitia alugar um conteúdo mesmo quando ele estava indisponível. | Método alugar() do AluguelController.java, após a busca do conteúdo | Adicionamos uma verificação com if (!conteudo.isDisponivel()) e lançamos a ConteudoIndisponivelException quando o conteúdo não estiver disponível para aluguel | Validação de regras de negócio e tratamento de exceções |
 | bug07 | | | | |
 | bug08 | | | | |
 | bug09 | | | | |
