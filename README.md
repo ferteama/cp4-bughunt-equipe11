@@ -28,7 +28,7 @@
 |---|---|---|---|---|
 | bug01 | Falta da indicação da variável Nome em Usuario.class | Linha 22 do Usuario.class | Adicionar "this." a variável | Revisão - Exercício ENADE: Questão 3 |
 | bug02 | Sistema acha que o usuário tem dinheiro que não tem | Linha 28 do Usuario.class | Trocar lugar de this.creditos e preco | Comparação de valores |
-| bug03 | | | | |
+| bug03 | Todos usuários possuem ID null | Linha 12 do Usuario.class | Adicionamos @GeneratedValue(strategy = GenerationType.IDENTITY) | Atributo não definido |
 | bug04 | | | | |
 | bug05 | | | | |
 | bug06 | | | | |
