@@ -47,7 +47,7 @@
 | clean02 | Método debitarCreditos() em Usuario.java |Comentários devem dizer a verdade sobre o código — o comentário dizia "adiciona", mas o código subtrai | Corrigi o texto do comentário para refletir o que o código realmente faz |
 | clean03 | Final da classe ConteudoController.java | Evitar código morto/comentado (Clean Code) — método não utilizado e bloco de comentário com código antigo | Removi o método calcularDescontoAntigo() e o bloco de código comentado (histórico fica no Git, não no fonte) |
 | clean04 | Atributo duracaoMinutos em Conteudo.java e seus usos em ConteudoController.java | Encapsulamento — atributo público permitia acesso direto, ignorando o getter/setter | Tornei o campo private e substituí os acessos diretos (filme.duracaoMinutos) pelo método getDuracaoMinutos() |
-| clean05 | | | |
+| clean05 | Método alugar() em Usuario.java | Responsabilidade única / SRP  — o método misturava regra de negócio do aluguel com a impressão do recibo | Extraí a impressão do recibo para o método privado imprimirRecibo(), deixando alugar() focado só na regra de negócio |
 | clean06 | | | |
 
 ---

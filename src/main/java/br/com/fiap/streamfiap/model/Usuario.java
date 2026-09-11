@@ -53,6 +53,13 @@ public class Usuario {
         debitarCreditos(preco);
         c.setDisponivel(false);
 
+        imprimirRecibo(c,preco);
+        
+        return this;
+    }
+    
+    // Novo método privado, separando a responsabilidade de exibir o recibo
+    private void imprimirRecibo(Conteudo c, double preco) {
         System.out.println("==================================================");
         System.out.println("RECIBO STREAMFIAP");
         System.out.println("Usuario: " + this.nome);
@@ -61,8 +68,6 @@ public class Usuario {
         System.out.println("Creditos restantes: R$ " + this.creditos);
         System.out.println("Obrigado por usar o StreamFIAP!");
         System.out.println("==================================================");
-
-        return this;
     }
 
     // Getters e Setters
