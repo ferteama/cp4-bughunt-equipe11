@@ -1,18 +1,16 @@
 # Checkpoint 4 — Bug Hunt StreamFIAP
 
-> Copie este arquivo para a raiz do seu repositório com o nome **README.md**
-> e preencha todas as seções.
-
 ## Identificação
 
-**Grupo:** ___
+**Grupo:** Equipe11
 
 | Integrante | RM | Turma |
 |---|---|---|
-| | | |
-| | | |
-| | | |
-| | | |
+| Auro Vanetti | RM563761 | 2CCPH |
+| Renan Mano Otero | RM554911 | 2CCPH |
+| Marco Antonio Ferreira Fonseca | RM566434 | 2CCPH |
+| Bruno Soares de Santanna | RM562235 | 2CCPH |
+| Enzo Yokokura Araujo | RM564177 | 2CCPH |
 
 | Campo | |
 |---|---|
