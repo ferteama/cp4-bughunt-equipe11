@@ -13,7 +13,7 @@ public abstract class Conteudo {
     private String titulo;
     private String categoria;
 
-    public int duracaoMinutos;
+    private int duracaoMinutos;
 
     private int classificacaoEtaria;
     private boolean disponivel;
