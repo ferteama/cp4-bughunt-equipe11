@@ -26,7 +26,7 @@
 
 | # | Sintoma observado (o que fiz/vi) | Causa raiz (arquivo e linha aproximada) | Correção aplicada | Conceito da disciplina |
 |---|---|---|---|---|
-| bug01 | | | | |
+| bug01 | Falta da indicação da variável Nome em Usuario.class | Linha 22 do Usuario.class | Adicionar "this." a variável | Revisão - Exercício ENADE: Questão 3 |
 | bug02 | | | | |
 | bug03 | | | | |
 | bug04 | | | | |
