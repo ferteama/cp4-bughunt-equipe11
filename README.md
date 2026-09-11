@@ -30,7 +30,7 @@
 | bug02 | Sistema acha que o usuário tem dinheiro que não tem | Linha 28 do Usuario.class | Trocar lugar de this.creditos e preco | Comparação de valores |
 | bug03 | Todos usuários possuem ID null | Linha 12 do Usuario.class | Adicionamos @GeneratedValue(strategy = GenerationType.IDENTITY) | Atributo não definido |
 | bug04 | Comparação incorreta de String utilizando "==" | Linha 47 do ConteudoController.java | Substituímos para .equals() para comparar as strings | Comparação entre strings |
-| bug05 | | | | |
+| bug05 | O método captura qualquer exceção e retorna null | Linha 30 do ConteudoController.java | Removemos o try/catch e simplificamos o retorno para ResponseEntity.ok(conteudo) | Tratamento de exceções |
 | bug06 | | | | |
 | bug07 | | | | |
 | bug08 | | | | |
