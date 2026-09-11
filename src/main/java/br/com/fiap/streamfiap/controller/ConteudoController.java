@@ -84,15 +84,15 @@ public class ConteudoController {
         return ResponseEntity.status(201).body(conteudoRepository.save(novo));
     }
 
-    // código do protótipo antigo — mantido aqui caso o time de marketing volte atrás
-    private double calcularDescontoAntigo(double preco) {
-        double desconto = 0.0;
-        if (preco >= 10.0) {
-            desconto = preco * 0.1;
-        }
-        return preco - desconto;
-    }
-
+    // TODO: código do protótipo antigo — mantido aqui caso o time de marketing volte atrás 
+    //    private double calcularDescontoAntigo(double preco) {
+    //        double desconto = 0.0;
+    //        if (preco >= 10.0) {
+    //            desconto = preco * 0.1;
+    //        }
+    //        return preco - desconto;
+    //    }
+    
     // TODO: reativar quando confirmarem a regra de cupons (não apagar, pode ser útil)
     // if (usuario.temCupomAtivo()) {
     //     preco = preco - 5.0;

@@ -45,7 +45,7 @@
 |---|---|---|---|
 | clean01 |Método alugar() em Usuario.java | Nomes significativos - A variável p não dizia nada sobre seu conteúdo |Renomeei a variável p para preco em todas as suas ocorrências no método |
 | clean02 | Método debitarCreditos() em Usuario.java |Comentários devem dizer a verdade sobre o código — o comentário dizia "adiciona", mas o código subtrai | Corrigi o texto do comentário para refletir o que o código realmente faz |
-| clean03 | | | |
+| clean03 | Final da classe ConteudoController.java | Evitar código morto/comentado (Clean Code) — método não utilizado e bloco de comentário com código antigo | Removi o método calcularDescontoAntigo() e o bloco de código comentado (histórico fica no Git, não no fonte) |
 | clean04 | | | |
 | clean05 | | | |
 | clean06 | | | |
