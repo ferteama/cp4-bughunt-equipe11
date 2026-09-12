@@ -14,8 +14,8 @@
 
 | Campo | |
 |---|---|
-| **Total de bugs corrigidos** | ___ / 12 |
-| **Total de ajustes de Clean Code** | ___ / 6 |
+| **Total de bugs corrigidos** | 12 / 12 |
+| **Total de ajustes de Clean Code** | 6 / 6 |
 
 ---
 
@@ -63,11 +63,25 @@ usa `ConteudoRepository`). Explique por que o Spring precisa gerenciar esses obj
 em vez de criarmos com `new ConteudoRepository()`. O que exatamente o Spring faz ao
 injetar um bean, e por que isso não funcionaria com um `new` comum?
 
+No StreamFIAP, o `ConteudoController` recebe o `ConteudoRepository` pelo `@Autowired`, em vez de criar esse objeto manualmente.
+O `ConteudoRepository` é uma interface que estende `JpaRepository`, então não existe uma implementação nossa para criar diretamente com `new`.
+O Spring Data cria a implementação dessa interface e o Spring passa a gerenciar esse objeto como um bean.
+Quando encontra o `@Autowired`, o framework procura um bean compatível e injeta essa instância no controller.
+Por isso conseguimos usar métodos como `findAll()`, `findById()` e `save()` sem implementar o acesso ao banco manualmente.
+Um `new` comum não passaria por esse gerenciamento e também não teria automaticamente a infraestrutura do Spring Data JPA.
+
 ### 2. JDBC vs Spring Data JPA (Aulas 12 e 13)
 Na Aula 12 escrevemos um `ProdutoDAO` na mão com `Connection`, `PreparedStatement` e
 `ResultSet`. Aqui o `ConteudoRepository` tem 2 linhas e faz CRUD completo. Compare as
 duas abordagens: o que o Spring Data JPA automatiza, o que o JDBC/DAO ainda resolve
 melhor, e como o `findByCategoria` consegue funcionar sem implementação.
+
+Com JDBC puro, precisamos abrir a `Connection`, preparar o SQL, definir os parâmetros, executar e ler o `ResultSet`.
+Também é responsabilidade do programador fechar esses recursos corretamente depois da operação.
+No StreamFIAP, o `ConteudoRepository` estende `JpaRepository` e já recebe operações como `save`, `findAll` e `findById`.
+O método `findByCategoria(String categoria)` funciona sem corpo porque o Spring Data interpreta o nome do método e monta a consulta pelo atributo `categoria`.
+O JDBC ainda é útil quando precisamos controlar exatamente o SQL executado ou otimizar uma consulta específica.
+Já o Spring Data JPA diminui bastante o código repetitivo, embora deixe parte do SQL gerado escondida pelo framework.
 
 ### 3. Exceções checked vs unchecked (Aula 11)
 A `ClassificacaoIndicativaException` estourava como um erro genérico do servidor,
@@ -75,10 +89,24 @@ sem mensagem útil para o cliente. Explique a diferença entre `extends Exceptio
 `extends RuntimeException` no contexto desse bug, e como você fez a mensagem da
 regra (classificação indicativa) chegar de forma clara ao cliente da API.
 
+No projeto, `ClassificacaoIndicativaException` estende `Exception`, então ela é uma checked exception.
+Isso obriga quem chama um método que pode lançá-la a tratar a exceção ou declarar `throws`, como acontece em `Usuario.alugar()` e no `AluguelController`.
+Se ela estendesse `RuntimeException`, seria unchecked e o compilador não exigiria essa declaração ou tratamento explícito.
+O problema da API foi resolvido adicionando um tratamento específico no `GlobalExceptionHandler`.
+O `@ExceptionHandler(ClassificacaoIndicativaException.class)` captura a exceção e retorna HTTP 403.
+Além disso, ele usa `e.getMessage()`, fazendo a mensagem da regra de classificação indicativa chegar de forma clara ao cliente.
+
 ### 4. Sobrescrita vs sobrecarga (Aula 7)
 Um dos bugs compilava sem nenhum erro: o método da `Serie` parecia sobrescrever
 `calcularPrecoAluguel`, mas na verdade sobrecarregava. Explique a diferença entre
 override e overload nesse caso e por que a anotação `@Override` teria impedido o bug.
+
+Sobrescrita acontece quando a classe filha redefine um método herdado mantendo a mesma assinatura.
+Sobrecarga acontece quando existem métodos com o mesmo nome, mas com parâmetros diferentes.
+No bug da `Serie`, existia `calcularPrecoAluguel(double desconto)`, enquanto em `Conteudo` o método era `calcularPrecoAluguel()` sem parâmetros.
+Por isso o Java tratava os dois como métodos diferentes e o código compilava, mas a série não substituía o comportamento herdado.
+A correção foi usar `calcularPrecoAluguel()` com a mesma assinatura e adicionar `@Override`.
+Se `@Override` tivesse sido usado no método com o parâmetro `double desconto`, o compilador teria apontado que ele não sobrescrevia nenhum método da superclasse.
 
 ### 5. Onde blindar o objeto? (Aulas 3, 4 e 13)
 Vimos bugs de dados inválidos aceitos (duração negativa, créditos negativos, campos
@@ -86,11 +114,25 @@ nulos). Em quais lugares (construtor, setter, método do model) cada tipo de val
 deve ficar? Justifique usando os bugs que você encontrou e explique por que validar só
 em um lugar não foi suficiente.
 
+As validações devem ficar próximas do dado ou da regra que precisam proteger.
+No construtor, devemos impedir que o objeto já seja criado em um estado inválido, como foi feito em `Usuario` ao rejeitar créditos negativos.
+Mas validar apenas no construtor não basta, porque o valor ainda pode ser alterado depois por um setter.
+Por isso regras permanentes, como créditos não negativos, duração maior que zero e campos obrigatórios, também devem ser verificadas nos setters.
+Já regras ligadas a uma ação específica devem ficar no método correspondente, como a classificação indicativa e os créditos suficientes verificados em `Usuario.alugar()`.
+Assim, o próprio model continua protegido mesmo quando ele for usado por outro controller ou por outra parte da aplicação.
+
 ### 6. Abstração e interface (Aulas 8 e 9)
 `Conteudo` é abstrata e `Promocionavel` é uma interface. Explique a diferença de
 propósito entre as duas nesse projeto e o que mudaria no código se o Documentário
 passasse a ter promoções — quais classes/linhas seriam tocadas e quais ficariam
 intactas? O que isso diz sobre o design do sistema?
+
+`Conteudo` é uma classe abstrata porque representa a base comum dos tipos de conteúdo do StreamFIAP.
+Ela concentra dados e comportamentos compartilhados, como título, categoria, duração, classificação, disponibilidade e cálculo de preço.
+Já `Promocionavel` representa uma capacidade: quem implementa essa interface precisa fornecer `aplicarPromocao(double preco)`.
+Hoje `Documentario` apenas estende `Conteudo` e não implementa `Promocionavel`.
+Para permitir promoção em documentários, seria necessário adicionar `implements Promocionavel` em `Documentario` e implementar `aplicarPromocao`.
+Como `Conteudo.calcularPrecoPromocional()` já verifica `instanceof Promocionavel`, essa lógica geral, os repositories e os controllers poderiam continuar sem alteração, mostrando um baixo acoplamento desse comportamento.
 
 ---
 
@@ -98,6 +140,4 @@ intactas? O que isso diz sobre o design do sistema?
 
 Alguma dificuldade, dúvida ou comentário sobre o checkpoint?
 
-```
-
-```
+A maior dificuldade do checkpoint foi perceber que nem todo bug gera erro de compilação. Alguns problemas estavam na lógica ou no uso dos conceitos de orientação a objetos e só apareciam ao comparar o comportamento da API com o resultado esperado. O exercício também ajudou a relacionar conteúdos de várias aulas, principalmente encapsulamento, herança, polimorfismo, tratamento de exceções e Spring Data JPA. Fazer a investigação por partes facilitou entender a causa de cada problema antes de modificar o código.
